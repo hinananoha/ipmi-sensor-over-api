@@ -22,6 +22,14 @@ This system can use for Zabbix server(HTTP Agent item).
   - python3-pip
     - mod_wsgi
 
+## Test environment
+- Ubuntu Server 18.04 LTS/ Ubuntu Server 20.04 LTS
+- Python 3.6.9/3.8.5
+- Hardware:
+  - A.T.Works, Inc. Quad Beagle ZG+
+  - NEC Express5800/E120d-1
+- Zabbix Server 5.0/5.2 (for Zabbix Template)
+
 ## Installation(Common: Required this step all type)
 ### 1. Install packages
 ```
