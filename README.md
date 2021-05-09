@@ -346,7 +346,7 @@ $ curl http://localhost:3002/sensors
 Import zabbix template `IPMI-over-HTTP.{xml,json,yaml}` from this repository (in `zabbix-template` directory).
 This template name is **Template App IPMI Sensors via HTTP Agent**.
 After import, link this template that you want to monitoring and edit macro that following:
-  - {$API_SERVER_URL} : Your API Server URL (If you imprement using default, http://<API-server-IP>:3002/sensors)
+  - {$API_SERVER_URL} : Your API Server URL (If you imprement using default, http://`<API-server-IP>`:3002/sensors)
 
 This template is used LLD(Low Level Discovery), so create sensor items automatically.
 
