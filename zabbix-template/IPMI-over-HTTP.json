@@ -1,0 +1,315 @@
+{
+    "zabbix_export": {
+        "version": "5.2",
+        "date": "2021-05-09T06:04:21Z",
+        "groups": [
+            {
+                "name": "Templates"
+            },
+            {
+                "name": "Templates/Server hardware"
+            }
+        ],
+        "templates": [
+            {
+                "template": "Template App IPMI Sensors via HTTP Agent",
+                "name": "Template App IPMI Sensors via HTTP Agent",
+                "description": "Get Server sensor's data (Temperature, Fan, Voltage, etc) using local IPMI command and HTTP API server via HTTP Agent",
+                "groups": [
+                    {
+                        "name": "Templates"
+                    },
+                    {
+                        "name": "Templates/Server hardware"
+                    }
+                ],
+                "applications": [
+                    {
+                        "name": "General"
+                    },
+                    {
+                        "name": "Sensors"
+                    }
+                ],
+                "items": [
+                    {
+                        "name": "API Response",
+                        "type": "HTTP_AGENT",
+                        "key": "http.ipmi.rawresponse",
+                        "trends": "0",
+                        "value_type": "TEXT",
+                        "applications": [
+                            {
+                                "name": "General"
+                            }
+                        ],
+                        "url": "{$API_SERVER_URL}",
+                        "output_format": "JSON"
+                    }
+                ],
+                "discovery_rules": [
+                    {
+                        "name": "Sensors Discovery",
+                        "type": "DEPENDENT",
+                        "key": "http.ipmi.sensors.discovery",
+                        "delay": "0",
+                        "description": "Sensor data discovery",
+                        "item_prototypes": [
+                            {
+                                "name": "Sensor: {#SENSOR_NAME} thresholds(max critical)",
+                                "type": "DEPENDENT",
+                                "key": "http.ipmi.sensors[{#SENSOR_NAME},maxcrit]",
+                                "delay": "0",
+                                "trends": "0",
+                                "status": "DISABLED",
+                                "discover": "NO_DISCOVER",
+                                "value_type": "FLOAT",
+                                "units": "{#UNIT}",
+                                "applications": [
+                                    {
+                                        "name": "Sensors"
+                                    }
+                                ],
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.body.sensors.['{#SENSOR_NAME}'].thresholds.max.crit"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "http.ipmi.rawresponse"
+                                }
+                            },
+                            {
+                                "name": "Sensor: {#SENSOR_NAME} thresholds(max fatal)",
+                                "type": "DEPENDENT",
+                                "key": "http.ipmi.sensors[{#SENSOR_NAME},maxfatal]",
+                                "delay": "0",
+                                "trends": "0",
+                                "status": "DISABLED",
+                                "discover": "NO_DISCOVER",
+                                "value_type": "FLOAT",
+                                "units": "{#UNIT}",
+                                "applications": [
+                                    {
+                                        "name": "Sensors"
+                                    }
+                                ],
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.body.sensors.['{#SENSOR_NAME}'].thresholds.max.fatal"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "http.ipmi.rawresponse"
+                                }
+                            },
+                            {
+                                "name": "Sensor: {#SENSOR_NAME} thresholds(max warning)",
+                                "type": "DEPENDENT",
+                                "key": "http.ipmi.sensors[{#SENSOR_NAME},maxwarn]",
+                                "delay": "0",
+                                "trends": "0",
+                                "status": "DISABLED",
+                                "discover": "NO_DISCOVER",
+                                "value_type": "FLOAT",
+                                "units": "{#UNIT}",
+                                "applications": [
+                                    {
+                                        "name": "Sensors"
+                                    }
+                                ],
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.body.sensors.['{#SENSOR_NAME}'].thresholds.max.warn"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "http.ipmi.rawresponse"
+                                }
+                            },
+                            {
+                                "name": "Sensor: {#SENSOR_NAME} thresholds(min critical)",
+                                "type": "DEPENDENT",
+                                "key": "http.ipmi.sensors[{#SENSOR_NAME},mincrit]",
+                                "delay": "0",
+                                "trends": "0",
+                                "status": "DISABLED",
+                                "discover": "NO_DISCOVER",
+                                "value_type": "FLOAT",
+                                "units": "{#UNIT}",
+                                "applications": [
+                                    {
+                                        "name": "Sensors"
+                                    }
+                                ],
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.body.sensors.['{#SENSOR_NAME}'].thresholds.min.crit"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "http.ipmi.rawresponse"
+                                }
+                            },
+                            {
+                                "name": "Sensor: {#SENSOR_NAME} thresholds(min fatal)",
+                                "type": "DEPENDENT",
+                                "key": "http.ipmi.sensors[{#SENSOR_NAME},minfatal]",
+                                "delay": "0",
+                                "trends": "0",
+                                "status": "DISABLED",
+                                "discover": "NO_DISCOVER",
+                                "value_type": "FLOAT",
+                                "units": "{#UNIT}",
+                                "applications": [
+                                    {
+                                        "name": "Sensors"
+                                    }
+                                ],
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.body.sensors.['{#SENSOR_NAME}'].thresholds.min.fatal"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "http.ipmi.rawresponse"
+                                }
+                            },
+                            {
+                                "name": "Sensor: {#SENSOR_NAME} thresholds(min warning)",
+                                "type": "DEPENDENT",
+                                "key": "http.ipmi.sensors[{#SENSOR_NAME},minwarn]",
+                                "delay": "0",
+                                "trends": "0",
+                                "status": "DISABLED",
+                                "discover": "NO_DISCOVER",
+                                "value_type": "FLOAT",
+                                "units": "{#UNIT}",
+                                "applications": [
+                                    {
+                                        "name": "Sensors"
+                                    }
+                                ],
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.body.sensors.['{#SENSOR_NAME}'].thresholds.min.warn"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "http.ipmi.rawresponse"
+                                }
+                            },
+                            {
+                                "name": "Sensor: {#SENSOR_NAME} status",
+                                "type": "DEPENDENT",
+                                "key": "http.ipmi.sensors[{#SENSOR_NAME},status]",
+                                "delay": "0",
+                                "trends": "0",
+                                "value_type": "CHAR",
+                                "applications": [
+                                    {
+                                        "name": "Sensors"
+                                    }
+                                ],
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.body.sensors.['{#SENSOR_NAME}'].status"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "http.ipmi.rawresponse"
+                                },
+                                "trigger_prototypes": [
+                                    {
+                                        "expression": "{str(ok)}=0",
+                                        "name": "Sensor: {#SENSOR_NAME} status is not health",
+                                        "opdata": "http.ipmi.sensors[{#SENSOR_NAME},value], http.ipmi.sensors[{#SENSOR_NAME},status]",
+                                        "priority": "HIGH"
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Sensor: {#SENSOR_NAME} value",
+                                "type": "DEPENDENT",
+                                "key": "http.ipmi.sensors[{#SENSOR_NAME},value]",
+                                "delay": "0",
+                                "value_type": "FLOAT",
+                                "units": "{#UNIT}",
+                                "applications": [
+                                    {
+                                        "name": "Sensors"
+                                    }
+                                ],
+                                "preprocessing": [
+                                    {
+                                        "type": "JSONPATH",
+                                        "parameters": [
+                                            "$.body.sensors.['{#SENSOR_NAME}'].value"
+                                        ]
+                                    }
+                                ],
+                                "master_item": {
+                                    "key": "http.ipmi.rawresponse"
+                                }
+                            }
+                        ],
+                        "master_item": {
+                            "key": "http.ipmi.rawresponse"
+                        },
+                        "lld_macro_paths": [
+                            {
+                                "lld_macro": "{#SENSOR_NAME}",
+                                "path": "$.key"
+                            },
+                            {
+                                "lld_macro": "{#UNIT}",
+                                "path": "$.unit"
+                            }
+                        ],
+                        "preprocessing": [
+                            {
+                                "type": "JSONPATH",
+                                "parameters": [
+                                    "$.body.sensors"
+                                ]
+                            },
+                            {
+                                "type": "JAVASCRIPT",
+                                "parameters": [
+                                    "var items = JSON.parse(value);\nvar macro = [];\nObject.keys(items).forEach(function(key) {\n  macro.push({\"key\": key, \"unit\": items[key][\"unit\"]});\n});\nreturn JSON.stringify(macro);"
+                                ]
+                            }
+                        ]
+                    }
+                ],
+                "macros": [
+                    {
+                        "macro": "{$API_SERVER_URL}",
+                        "value": "http://localhost:3001/sensors"
+                    }
+                ]
+            }
+        ]
+    }
+}
